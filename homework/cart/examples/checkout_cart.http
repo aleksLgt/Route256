@@ -1,0 +1,7 @@
+POST http://localhost:8082/cart/checkout
+Content-Type: application/json
+
+{
+  "user": 31337
+}
+### expected {} 200 OK; must create an order and return orderID

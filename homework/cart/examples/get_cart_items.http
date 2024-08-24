@@ -1,0 +1,11 @@
+# ========================================================================================
+
+### get list of a cart
+GET http://localhost:8082/cart/31337/list/
+Content-Type: application/json
+### expected {} 200 OK; must show cart
+
+### get invalid list of cart
+GET http://localhost:8082/cart/0/list/
+Content-Type: application/json
+### 400 bad request

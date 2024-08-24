@@ -1,0 +1,86 @@
+stages:
+  - .pre
+  - build
+  - e2e
+  - test
+
+linter:
+  stage: .pre
+  image: golangci/golangci-lint:v1.59.0
+  script:
+    - make lint
+
+build:
+  stage: build
+  image: golang:1.22-bookworm
+  script:
+    - apt update
+    - apt install -y docker-compose
+    - make build-all
+
+e2e-tests:
+  stage: e2e
+  image: golang:1.22-bookworm
+  variables:
+    DB_PORT: ${POSTGRESQL_PORT}
+    DB_HOST: ${POSTGRESQL_HOST_WRITE}
+    DB_USER: ${POSTGRESQL_USERNAME}
+    DB_PASSWORD: ${POSTGRESQL_PASSWORD}
+    DB_NAME: ${POSTGRESQL_DATABASE}
+  script:
+    - apt update
+    - apt install -y docker-compose
+    - make e2e-tests
+
+unit-tests:
+  stage: test
+  image: golang:1.22-bookworm
+  script:
+    - make unit-tests
+  
+test-cart-coverage:
+  stage: test
+  image: golang:1.22-bookworm
+  script:
+    - cd ./cart
+    - go test ./internal/... -coverprofile=coverage.txt -covermode count
+    - go get github.com/boumenot/gocover-cobertura
+    - go run github.com/boumenot/gocover-cobertura < coverage.txt > coverage.xml
+    - go tool cover -func coverage.txt
+  artifacts:
+    reports:
+      coverage_report:
+        coverage_format: cobertura
+        path: ./cart/coverage.xml
+  coverage: '/total:\s+\(statements\)\s+\d+.\d+%/'
+
+test-loms-coverage:
+  stage: test
+  image: golang:1.22-bookworm
+  script:
+    - cd ./loms
+    - go test ./internal/... -coverprofile=coverage.txt -covermode count
+    - go get github.com/boumenot/gocover-cobertura
+    - go run github.com/boumenot/gocover-cobertura < coverage.txt > coverage.xml
+    - go tool cover -func coverage.txt
+  artifacts:
+    reports:
+      coverage_report:
+        coverage_format: cobertura
+        path: ./loms/coverage.xml
+  coverage: '/total:\s+\(statements\)\s+\d+.\d+%/'
+
+integration-tests:
+  stage: test
+  image: golang:1.22-bookworm
+  variables:
+    DB_PORT: ${POSTGRESQL_PORT}
+    DB_HOST: ${POSTGRESQL_HOST_TEST}
+    DB_USER: ${POSTGRESQL_USERNAME}
+    DB_PASSWORD: ${POSTGRESQL_PASSWORD}
+    DB_NAME: ${POSTGRESQL_DATABASE}
+  script:
+    - apt update
+    - apt install -y docker-compose
+    - make integration-tests
+

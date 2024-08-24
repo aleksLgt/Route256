@@ -1,0 +1,4 @@
+### delete whole cart
+DELETE http://localhost:8082/user/31337/cart/
+Content-Type: application/json
+### expected {} 200 OK; must delete cart

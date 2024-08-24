@@ -1,4 +1,6 @@
-# This project is a course project of the 12th stream Route256 Go Middle.
+# Route256
+
+This project is a course project of the 12th stream Route256 Go Middle.
 
 As part of the training project, a system consisting of several services was implemented, which simulates the operation of a simple online store, including such business processes as:
 - adding products to the cart and removing them from it

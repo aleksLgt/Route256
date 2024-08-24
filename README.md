@@ -9,14 +9,14 @@ As part of the training project, a system consisting of several services was imp
 - cancellation of the order by the user or after the expiration of the payment waiting time
 
 Applied technologies in the project:
-  • Golang: mutex, graceful shutdown, errgroup, goroutines, channels and others.
-  • Unit, e2e tests with minimock - https://github.com/gojuno/minimock
-  • Benchmarks
-  • gRPC, protubuf, swagger
-  • PostgreSQL: master-slave replication, sqlc, transactions, goose for migrations, sharding
-  • CI/CD – working with Pipeline in GitLab. The pipeline consists of several stages, during which code linting, Unit run, integration and e2e tests, build and reversal of the entire application take place.
-  • Docker, docker-compose
-  • Prometheus
-  • Grafana
-  • Jaeger
-  • Apache Kafka
+- Golang: mutex, graceful shutdown, errgroup, goroutines, channels and others.
+- Unit, e2e tests with minimock - https://github.com/gojuno/minimock
+- Benchmarks
+- gRPC, protubuf, swagger
+- PostgreSQL: master-slave replication, sqlc, transactions, goose for migrations, sharding
+- CI/CD – working with Pipeline in GitLab. The pipeline consists of several stages, during which code linting, Unit run, integration and e2e tests, build and reversal of the entire application take place.
+- Docker, docker-compose
+- Prometheus
+- Grafana
+- Jaeger
+- Apache Kafka
